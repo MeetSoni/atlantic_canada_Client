@@ -7,6 +7,8 @@ import ShimmerEffect from '@/components/ShimmerEffect/ShimmerEffect';
 import Spinner from '@/components/spinner/page';
 
 interface Service {
+  _id:string;
+  svs_id:string;
   svs_name: string;
   svs_image: string;
   svs_loc: string;

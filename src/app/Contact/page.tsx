@@ -1,83 +1,65 @@
-'use client'
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import Service_card from '@/components/service_card/page';
-import API_URL from '@/constants/constant';
-import ShimmerEffect from '@/components/ShimmerEffect/ShimmerEffect';
-import Spinner from '@/components/spinner/page';
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { faRunning, faPhone, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
-interface Service {
-  svs_name: string;
-  svs_image: string;
-  svs_loc: string;
-  svs_contact: string;
-  svs_info: string;
+interface InfoCardProps {
+  icon: IconDefinition;
+  title: string;
+  description: string;
 }
 
-function Page(): JSX.Element {
-  const [services, setServices] = useState<Service[]>([]);
-  const [isLoading, setIsLoading] = useState(true); // Added state to track loading status
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(API_URL.GET_SERVICE_DATA, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data: Service[] = await response.json();
-        setServices(data); // Update state with fetched data
-        setIsLoading(false); // Set loading status to false once data is fetched
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setIsLoading(false); // Ensure loading status is set to false even on error
-      }
-    };
-
-    fetchData();
-  }, []); 
-
+const InfoCard: React.FC<InfoCardProps> = ({ icon, title, description }) => {
   return (
-    <>
-      <div className='w-full container flex shadow mt-20'>
-        <div className='w-2/4 p-10'>
-          <h1 className="text-2xl md:text-4xl font-bold text-customRed mb-6 text-center">Services</h1>
-          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt soluta fugiat cumque beatae in voluptas tempore, deserunt repellat nemo eaque, quibusdam iure aliquam! Voluptates sint blanditiis, quo impedit mollitia libero beatae ipsa facilis numquam nostrum laborum nemo reiciendis voluptate hic ullam culpa odio magnam officiis accusamus delectus dolores dolorem possimus.</p>
-        </div>
-        <div className='w-2/4 '>
-          <Image
-            src="/images/service_page.jpg"
-            alt="Logo"
-            width={0}
-            height={50}
-            className="w-full"
-          />
+    <div className="flex-1 flex items-center bg-white rounded-lg p-4 md:w-1/3 transition duration-500 ease-in-out transform hover:-translate-y-1 shadow-lg hover:shadow-xl">
+      <div className="mr-4">
+        <div className="rounded-full bg-customRed text-white p-5 animate-pulse">
+          <FontAwesomeIcon icon={icon} className="h-6 w-6" />
         </div>
       </div>
-
-      <div className='w-full flex p-10 bg-gradient-to-r from-grad_red to-grad_white'>
-        <div className='w-1/4 p-5 border shadow-gray-900 bg-white '>
-          <h1 className="text-2xl md:text-4xl font-bold text-customRed mb-6 text-center">Services we provide</h1>
-          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Exercitationem sed eligendi molestiae nobis provident vel, asperiores ipsum illum architecto vero?</p>
-        </div>
-
-        {/* Conditional rendering based on isLoading state */}
-        {isLoading ? (
-         <Spinner/>
-        ) : (
-          <Service_card state={services}/>
-        )}
-
+      <div>
+        <h2 className="text-lg font-semibold">{title}</h2>
+        <p className="text-gray-600">{description}</p>
       </div>
-    </>
+    </div>
+  );
+};
+
+const Contact: React.FC = () => {
+  return (
+    <div className="bg-gradient-to-r bg-gradient-to-r from-grad_red to-grad_white py-12 px-6 lg:px-20">
+      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden md:max-w-6xl">
+        <div className="md:flex">
+          <div className="w-full p-4">
+            <div className="text-center">
+              <h1 className="text-3xl text-gray-800 font-bold">Contact Us</h1>
+              <p className="text-gray-600 mt-4">Any questions or remarks? Just write us a message!</p>
+            </div>
+            <div className="mt-8">
+              <form>
+                <div className="flex flex-wrap -mx-3 mb-6">
+                  <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <input type="text" className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Enter a valid email address"/>
+                  </div>
+                  <div className="w-full md:w-1/2 px-3">
+                    <input type="text" className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Enter your Name"/>
+                  </div>
+                </div>
+                <div className="text-center mt-8">
+                  <button className="btn-transform bg-customRed hover:bg-pink-700 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110">SUBMIT</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="max-w-4xl mx-auto md:flex mt-12 space-x-4 md:max-w-6xl">
+        <InfoCard icon={faRunning} title="ABOUT CLUB" description="Running Guide Workouts" />
+        <InfoCard icon={faPhone} title="PHONE (LANDLINE)" description="+1-674-897-0340\n+1-674-897-0341" />
+        <InfoCard icon={faMapMarkerAlt} title="OUR OFFICE LOCATION" description="The Atlantic Canada Consultation\nToronto Downtown, ON, CANADA" />
+      </div>
+    </div>
   );
 }
 
-export default Page;
+export default Contact;
