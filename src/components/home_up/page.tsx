@@ -69,10 +69,10 @@ const Home: React.FC = () => {
       <div className="container ">
         <div className="md:relative lg: relative flex flex-col items-center justify-center mt-10 ">
           {/* Video */}
-          <Video src={localvideo} />
+          {/* <Video src={localvideo} /> */}
 
           {/* Main Container */}
-          <div className="md:absolute  lg:absolute bg-white bg-opacity-50 p-6 rounded-md shadow-lg mt-8 md:mt-12 lg:mt-20 w-full md:w-2/3 lg:w-1/2">
+          <div className=" bg-white bg-opacity-50 p-6 rounded-md shadow-lg mt-8 md:mt-12 lg:mt-20 w-full md:w-2/3 lg:w-1/2">
             {/* Content in the white box */}
             <h1 className="text-2xl md:text-4xl font-bold text-customRed mb-6 text-center">Join us on your journey to Atlantic Canada</h1>
             <p className="text-center">
