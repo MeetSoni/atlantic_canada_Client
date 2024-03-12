@@ -41,8 +41,8 @@ export default function Header() {
   return (
     <div className={`bg-white h-13 z-10 shadow-lg top-0 text-b_head bg-gradient-to-r from-grad_red to-grad_white`}>
       {/* Header */}
-      <nav className={`container p-7 lg:flex md:block sm:block items-center justify-between transition-all duration-300 ${scrolling ? 'py-1' : 'py-3'}`}>
-        <div className="font-bold">
+      <nav className={` p-7  lg:flex md:block sm:block items-center justify-between transition-all duration-300 ${scrolling ? 'py-1' : 'py-3'}`}>
+        <div className="font-bold ">
           <Image
             src="/images/logo.png"
             alt="Logo"
@@ -50,7 +50,7 @@ export default function Header() {
             height={1}
           />
         </div>
-        <div className="text-2xl ml-10 text-customRed font-bold ">
+        <div className="text-2xl text-center text-customRed font-bold ">
           <h1>Atlantic Canada Settlers</h1>
         </div>
   
@@ -100,9 +100,9 @@ export default function Header() {
         </div>
   
         {/* Mobile Menu Button */}
-        <div className="lg:hidden">
+        <div className="lg:hidden text-end">
           <button onClick={toggleMobileMenu} className="text-customRed mx-2" aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}>
-            {mobileMenuOpen ? 'Close' : 'Menu'}
+            {mobileMenuOpen ? '' : 'Menu'}
           </button>
         </div>
       </nav>
