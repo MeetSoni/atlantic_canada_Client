@@ -42,7 +42,7 @@ export default function Header() {
     <div className={`bg-white h-13 z-10 shadow-lg top-0 text-b_head bg-gradient-to-r from-grad_red to-grad_white`}>
       {/* Header */}
       <nav className={` p-7  lg:flex md:block sm:block items-center justify-between transition-all duration-300 ${scrolling ? 'py-1' : 'py-3'}`}>
-        <div className="font-bold ">
+        <div className="font-bold float-left ">
           <Image
             src="/images/logo.png"
             alt="Logo"
