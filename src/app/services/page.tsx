@@ -48,12 +48,12 @@ function Page(): JSX.Element {
 
   return (
     <>
-      <div className='w-full container flex shadow mt-20'>
-        <div className='w-2/4 p-10'>
+      <div className='   md:flex lg:flex shadow mt-20'>
+        <div className='lg:w-2/4 md:w-full  p-10'>
           <h1 className="text-2xl md:text-4xl font-bold text-customRed mb-6 text-center">Services</h1>
           <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt soluta fugiat cumque beatae in voluptas tempore, deserunt repellat nemo eaque, quibusdam iure aliquam! Voluptates sint blanditiis, quo impedit mollitia libero beatae ipsa facilis numquam nostrum laborum nemo reiciendis voluptate hic ullam culpa odio magnam officiis accusamus delectus dolores dolorem possimus.</p>
         </div>
-        <div className='w-2/4 '>
+        <div className='lg:w-2/4 md:w-full '>
           <Image
             src="/images/service_page.jpg"
             alt="Logo"
@@ -64,8 +64,8 @@ function Page(): JSX.Element {
         </div>
       </div>
 
-      <div className='w-full flex p-10 bg-gradient-to-r from-grad_red to-grad_white'>
-        <div className='w-1/4 p-5 border shadow-gray-900 bg-white '>
+      <div className='w-full lg:flex  p-10 bg-gradient-to-r from-grad_red to-grad_white'>
+        <div className='lg:w-1/4 p-5 border shadow-gray-900 bg-white '>
           <h1 className="text-2xl md:text-4xl font-bold text-customRed mb-6 text-center">Services we provide</h1>
           <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Exercitationem sed eligendi molestiae nobis provident vel, asperiores ipsum illum architecto vero?</p>
         </div>

@@ -21,7 +21,7 @@ function Page({ state }: ServiceCardProps) {
 
   return (
     <>
-      <div className='mx-auto p-5 grid grid-cols-1 md:grid-cols-3 gap-5 mt-6' style={{ maxWidth: '1200px' }}>
+      <div className='mx-auto p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-6' style={{ maxWidth: '1200px' }}>
         {state.map((item, index) => (
           <div key={index} className="flex flex-col rounded-lg overflow-hidden shadow-md bg-white hover:shadow-lg transition-shadow duration-300 ease-in-out h-full"> {/* Flex container for the card */}
             <img src={item.svs_image} alt={item.svs_name} className="w-full h-48 object-cover" />
