@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
-
+import Sidebar from '@/components/sidebar/page';
 
 export default function Header() {
   const navigate = useRouter();
@@ -39,10 +39,10 @@ export default function Header() {
   }, []);
 
   return (
-    <div className={`	bg-white  h-13 z-10 shadow-lg   top-0  text-b_head  bg-gradient-to-r from-grad_red to-grad_white`}>
+    <div className={`bg-white h-13 z-10 shadow-lg top-0 text-b_head bg-gradient-to-r from-grad_red to-grad_white`}>
       {/* Header */}
-      <nav className={`container  p-7 lg:flex md:block sm:block items-center justify-between transition-all duration-300 ${scrolling ? 'py-1' : 'py-3'}`}>
-        <div className="  font-bold">
+      <nav className={`container p-7 lg:flex md:block sm:block items-center justify-between transition-all duration-300 ${scrolling ? 'py-1' : 'py-3'}`}>
+        <div className="font-bold">
           <Image
             src="/images/logo.png"
             alt="Logo"
@@ -53,9 +53,9 @@ export default function Header() {
         <div className="text-2xl ml-10 text-customRed font-bold ">
           <h1>Atlantic Canada Settlers</h1>
         </div>
-
-        {/* <nav className={`bg-white  bg-gradient-to-r from-grad_red to-grad_white  p-4 mx-auto flex items-center justify-between sticky top-0 w-full transition-all duration-300 ${scrolling ? 'py-1' : 'py-4'}`}> */}
-        <div className="text-xl font-bold">
+  
+       {/* <nav className={`bg-white  bg-gradient-to-r from-grad_red to-grad_white  p-4 mx-auto flex items-center justify-between sticky top-0 w-full transition-all duration-300 ${scrolling ? 'py-1' : 'py-4'}`}> */}
+       <div className="text-xl font-bold">
           {/* Navbar Menu List */}
           <ul className={`hidden ml-10 lg:flex space-x-10 text-m`}>
             <li>
@@ -88,7 +88,7 @@ export default function Header() {
 
           </ul>
         </div>
-
+  
         {/* Login and Signup Buttons */}
         <div className="hidden lg:flex space-x-4">
           <button onClick={handleLogin}  className="text-customRed bg-transparent border border-solid border-customRed py-2 px-4 rounded hover:bg-customRed hover:text-white transition duration-300">
@@ -98,7 +98,7 @@ export default function Header() {
             Signup
           </button>
         </div>
-
+  
         {/* Mobile Menu Button */}
         <div className="lg:hidden">
           <button onClick={toggleMobileMenu} className="text-customRed mx-2" aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}>
@@ -106,14 +106,10 @@ export default function Header() {
           </button>
         </div>
       </nav>
-      {/* </nav> */}
-
-      {/* Navbar */}
-    
-
-      {/* Sidebar */}
-      {/* {mobileMenuOpen && <Sidebar closeMenu={closeMobileMenu} />} */}
-      {/* <Sidebar closeMenu={closeMobileMenu}/> */}
+  
+      {/* Sidebar - Conditionally rendered based on mobileMenuOpen state */}
+      {mobileMenuOpen && <Sidebar closeMenu={closeMobileMenu} />}
     </div>
   );
+  
 }
