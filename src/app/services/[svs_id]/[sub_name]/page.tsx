@@ -77,8 +77,8 @@ function Page({ params }: PageProps) {
   return (
     <>
       {moreData.map((item: SubService, index: number) => (
-        <div key={index} className="w-full container flex shadow mt-20">
-          <div className="w-2/4 p-10">
+        <div key={index} className="w-full  md:flex lg:flex  shadow mt-20">
+          <div className="lg:w-2/4 md:w-full p-10">
             <h1 className="text-2xl md:text-4xl font-bold text-customRed mb-6 text-center">
               {item.subsvs_name}
             </h1>
@@ -91,7 +91,7 @@ function Page({ params }: PageProps) {
               </Link>
             </div>
           </div>
-          <div className="w-2/4">
+          <div className="lg:w-2/4 md:w-full">
             <img
               src={item.subsvs_sub_img}
               alt="Sub Service"
