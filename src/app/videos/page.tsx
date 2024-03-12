@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import  API_URL  from '@/constants/constant';
+import API_URL from '@/constants/constant';
 
 interface Video {
   title: string;
@@ -16,8 +16,8 @@ function Page(): JSX.Element {
         const response = await fetch(`${API_URL.YOUTUBE}`, {
           method: 'GET',
           headers: {
-            'Content-Type': 'application/json'
-          }
+            'Content-Type': 'application/json',
+          },
         });
 
         if (!response.ok) {
@@ -37,37 +37,32 @@ function Page(): JSX.Element {
   }, []);
 
   return (
-    <>
-     <div className="container mx-auto py-8 bg-gradient-to-r from-grad_red to-grad_white">
-  <h1 className="text-3xl font-bold mb-4 text-center">Best Videos</h1>
-  <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 justify-center items-center">
-    {state.map((item, index) => (
-      <div key={index} className="max-w-sm rounded shadow-lg overflow-hidden bg-white">
-        <iframe
-          width="100%"
-          height="200"
-          src={item.url_webapp}
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-          className="object-cover h-40 md:h-48 lg:h-56"
-        ></iframe>
-        <div className="px-6 py-4">
-          <div className="font-bold text-lg mb-2 text-customRed">{item.title}</div>
-         
-        </div>
-        <div className="px-6 pt-4 pb-2">
-          <span className="inline-block bg-customRed text-white px-3 py-1 text-sm font-semibold rounded-full mr-2">Category: </span>
-          <span className="inline-block bg-gray-200 text-gray-700 px-3 py-1 text-sm font-semibold rounded-full"> Views</span>
-        </div>
-      </div>
-    ))}
-  </div>
+    <div className="container mx-auto p-8 bg-gradient-to-r bg-gradient-to-r from-grad_red to-grad_white">
+      <h1 className="text-3xl font-bold mb-8 text-center text-white">Best Videos</h1>
+      <div className="grid grid-cols-1 md:grid-cols-
+3 lg:grid-cols-3 gap-8">
+{state.map((item, index) => (
+<div key={index} className="flex flex-col rounded-lg shadow-lg bg-white overflow-hidden h-auto flex justify-between">
+<iframe
+           className="w-full h-48"
+           src={item.url_webapp}
+           title="YouTube video player"
+           frameBorder="0"
+           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+           allowFullScreen
+         ></iframe>
+<div className="p-6 flex-grow">
+<div className="font-bold text-xl mb-2 text-gray-800" style={{ minHeight: '64px' }}>{item.title}</div>
 </div>
-
-    </>
-  );
+<div className="px-6 pb-4 flex justify-between items-center">
+<span className="inline-block bg-red-500 text-white px-3 py-1 text-sm font-semibold rounded-full">Category</span>
+<span className="inline-block bg-gray-200 text-gray-700 px-3 py-1 text-sm font-semibold rounded-full">Views</span>
+</div>
+</div>
+))}
+</div>
+</div>
+);
 }
 
 export default Page;
