@@ -16,8 +16,11 @@ interface AppWrapperProps {
 }
 
 export default function AppWrapper({ children }: AppWrapperProps) {
+  // Check if localStorage is available before using it
+  const initialAuthToken = typeof window !== 'undefined' ? localStorage.getItem('authToken') || '' : '';
+
   // Initialize authToken state with the value from localStorage if it exists
-  const [authToken, setauthToken] = useState<string>(localStorage.getItem('authToken') || '');
+  const [authToken, setauthToken] = useState<string>(initialAuthToken);
 
   // Effect to run whenever authToken changes
   useEffect(() => {

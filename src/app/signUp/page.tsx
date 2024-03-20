@@ -3,6 +3,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import  API_URL  from '@/constants/constant';
+import { useAppContext } from '@/context';
 
 
 //defining type
@@ -16,6 +17,8 @@ interface FormData {
 
 //signup page function
 function SignupPage() {
+  const {authToken,setauthToken}=useAppContext();
+
     //state to handle form data
     const [formData, setFormData] = useState<FormData>({
         user_name: '',
@@ -115,11 +118,20 @@ function SignupPage() {
                         }
                     });
                     const data = await response.json();
-                    console.log(data.token);
-                    localStorage.setItem('token', data.token);
-                   
-                    console.log('Form Data:', formData);
+                    // console.log(data.message);
+
+                    if(data.message){
+                      setEmailError(`${data.message}`);
+                    }
+
+                    else{
+                      console.log(data.token)
+                      setauthToken(data.token); // Setting the authToken from the response
+                      console.log(`Auth Token: ${authToken}`);
+                        alert("signup successfully")
                     navigate.push('/');
+                    }
+                 
                 }
                 
                 catch (err: any) {
