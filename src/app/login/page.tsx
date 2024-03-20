@@ -2,6 +2,8 @@
 import React from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import  API_URL  from '@/constants/constant';
+
 
 //defining type
 interface FormData {
@@ -64,7 +66,7 @@ function SignupPage() {
         
             if(formValid){
                 try{
-                    const response = await fetch('http://localhost:5500/user/login',{
+                    const response = await fetch(API_URL.LOGIN,{
                         method:'POST',
                         body:JSON.stringify(formData),
                         headers:{
