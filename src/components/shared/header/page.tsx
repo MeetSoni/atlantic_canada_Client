@@ -4,10 +4,12 @@ import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/sidebar/page';
+import { useAppContext } from '@/context';
+
 
 export default function Header() {
   const navigate = useRouter();
-
+  const {authToken,setauthToken}=useAppContext();
   const [scrolling, setScrolling] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -23,8 +25,22 @@ export default function Header() {
     setMobileMenuOpen(false);
   };
 
+  const handleservice=()=>{
+    if(authToken ==''){
+      navigate.push('/login')
+    }
+
+    else{
+      navigate.push('/services')
+
+    }
+  }
   const handleSignup=()=>{
     navigate.push('/signUp');
+  }
+
+  const handlelogout=()=>{
+    setauthToken('');
   }
 
   const handleLogin=()=>{
@@ -42,7 +58,7 @@ export default function Header() {
     <div className={`bg-white h-13 z-10 shadow-lg top-0 text-b_head bg-gradient-to-r from-grad_red to-grad_white`}>
       {/* Header */}
       <nav className={` p-7  lg:flex md:block sm:block items-center justify-between transition-all duration-300 ${scrolling ? 'py-1' : 'py-3'}`}>
-        <div className="font-bold float-left ">
+        <div className="font-bold  float-left">
           <Image
             src="/images/logo.png"
             alt="Logo"
@@ -69,9 +85,9 @@ export default function Header() {
               </a>
             </li>
             <li>
-              <a href="/services" className="text-customRed">
+              <button onClick={handleservice} className="text-customRed">
                 Services
-              </a>
+              </button>
           
             </li>
             <li>
@@ -91,12 +107,15 @@ export default function Header() {
   
         {/* Login and Signup Buttons */}
         <div className="hidden lg:flex space-x-4">
-          <button onClick={handleLogin}  className="text-customRed bg-transparent border border-solid border-customRed py-2 px-4 rounded hover:bg-customRed hover:text-white transition duration-300">
+          {authToken=='' && <button onClick={handleLogin}  className="text-customRed bg-transparent border border-solid border-customRed py-2 px-4 rounded hover:bg-customRed hover:text-white transition duration-300">
             Login
-          </button>
-          <button onClick={handleSignup} className="text-white bg-customRed py-2 px-4 rounded hover:bg-white hover:text-customRed hover:border hover:border-solid hover:border-customRed transition duration-300">
+          </button>}
+         {/* {authToken ==='' &&  <button onClick={handleSignup} className="text-white bg-customRed py-2 px-4 rounded hover:bg-white hover:text-customRed hover:border hover:border-solid hover:border-customRed transition duration-300">
             Signup
-          </button>
+          </button>} */}
+       { authToken!='' &&    <button onClick={handlelogout} className="text-white bg-customRed py-2 px-4 rounded hover:bg-white hover:text-customRed hover:border hover:border-solid hover:border-customRed transition duration-300">
+            logout
+          </button>}
         </div>
   
         {/* Mobile Menu Button */}
