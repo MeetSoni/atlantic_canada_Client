@@ -2,9 +2,6 @@
 import React from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import  API_URL  from '@/constants/constant';
-import { useAppContext } from '@/context';
-
 
 //defining type
 interface FormData {
@@ -17,8 +14,6 @@ interface FormData {
 
 //signup page function
 function SignupPage() {
-  const {authToken,setauthToken}=useAppContext();
-
     //state to handle form data
     const [formData, setFormData] = useState<FormData>({
         user_name: '',
@@ -110,7 +105,7 @@ function SignupPage() {
         
             if(formValid){
                 try{
-                    const response = await fetch(API_URL.SIGNUP,{
+                    const response = await fetch('http://localhost:5500/user/signup',{
                         method:'POST',
                         body:JSON.stringify(formData),
                         headers:{
@@ -118,20 +113,11 @@ function SignupPage() {
                         }
                     });
                     const data = await response.json();
-                    // console.log(data.message);
-
-                    if(data.message){
-                      setEmailError(`${data.message}`);
-                    }
-
-                    else{
-                      console.log(data.token)
-                      setauthToken(data.token); // Setting the authToken from the response
-                      console.log(`Auth Token: ${authToken}`);
-                        alert("signup successfully")
+                    console.log(data.token);
+                    localStorage.setItem('token', data.token);
+                   
+                    console.log('Form Data:', formData);
                     navigate.push('/');
-                    }
-                 
                 }
                 
                 catch (err: any) {

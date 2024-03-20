@@ -2,10 +2,6 @@
 import React from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAppContext } from '@/context';
-import API_URL from '@/constants/constant';
-
-
 
 //defining type
 interface FormData {
@@ -19,9 +15,6 @@ interface FormData {
 //signup page function
 function SignupPage() {
     //state to handle form data
- 
-    const {authToken,setauthToken}=useAppContext();
-    const [checkuser,setcheckuser]=useState('');
     const [formData, setFormData] = useState<FormData>({
         user_name: '',
         email: '',
@@ -71,7 +64,7 @@ function SignupPage() {
         
             if(formValid){
                 try{
-                    const response = await fetch(API_URL.LOGIN,{
+                    const response = await fetch('http://localhost:5500/user/login',{
                         method:'POST',
                         body:JSON.stringify(formData),
                         headers:{
@@ -80,7 +73,7 @@ function SignupPage() {
                     });
                     const data = await response.json();
                     
-                    // console.log(data.error);
+                    console.log(data.error);
 
                     if(data.error){
                        
@@ -111,12 +104,6 @@ function SignupPage() {
                    
                     }
                     else{
-
-                      // document.cookie = `token=${data.token}; path=/`;
-                      // setauthToken(`${data.token}`);
-                      
-                      setauthToken(data.token); // Setting the authToken from the response
-                      console.log(`Auth Token: ${authToken}`);
                         alert("Login successfully")
                     navigate.push('/');
 
@@ -125,7 +112,7 @@ function SignupPage() {
                 
                 catch (err: any) {
                     console.log(err);
-                    // setError(err.response.data.errors || 'something went wrong');
+                    setError(err.response.data.errors || 'something went wrong');
                 }
                 }
             
@@ -136,12 +123,7 @@ function SignupPage() {
 // returning the body 
   return (
     <>
-      {authToken=='' &&  <div className="text-left  bg-gradient-to-r from-grad_red to-grad_white shadow-lg">
-    <h1 className="text-2xl font-bold text-center mb-4">Login is required</h1>
-    <p className="text-center">Please login to continue to the service.</p>
-  </div>}
       <div className=" p-10 min-h-screen flex items-center justify-center bg-gray-100  bg-gradient-to-r from-grad_red to-grad_white">
-        
         <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
           <h2 className="text-3xl font-bold mb-6">Login</h2>
          {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -171,8 +153,6 @@ function SignupPage() {
               Login
             </button>
           </form>
-          <a href="/signUp" className="text-blue-500 hover:text-blue-700">Don&apos;t have an account?</a>
-
         </div>
       </div>
     </>
