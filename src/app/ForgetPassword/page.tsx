@@ -2,7 +2,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAppContext } from '@/context';
+
 import API_URL from '@/constants/constant';
 
 
@@ -20,7 +20,7 @@ interface FormData {
 function SignupPage() {
     //state to handle form data
  
-    const {authToken,setauthToken}=useAppContext();
+   
     const [checkuser,setcheckuser]=useState('');
     const [formData, setFormData] = useState<FormData>({
         user_name: '',
