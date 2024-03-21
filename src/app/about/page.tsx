@@ -1,4 +1,5 @@
 'use client'
+import API_URL  from '@/constants/constant';
 import React, { useEffect, useState } from 'react';
 
 interface TeamMember {
@@ -20,7 +21,7 @@ function About() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5500/api/about_us', {
+        const response = await fetch(API_URL.ABOUT_US, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

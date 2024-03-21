@@ -9,7 +9,8 @@ export default {
   FORGOT_PASSWORD: `${API_URL}user/send-reset-password-email`,
   GET_SERVICE_DATA: `${API_URL}services`,
   YOUTUBE:`${API_URL}youtube`,
-  RESETPASSWORD:`${API_URL}user/reset-password`
+  RESETPASSWORD:`${API_URL}user/reset-password`,
+  ABOUT_US:`${API_URL}about_us`
   
 
 };
