@@ -31,7 +31,7 @@ function SignupPage() {
       });
     // various states
     const [emailError, setEmailError] = useState('');
-    const[passworderror,setPasswordError]=useState('');
+    const [emailmessage,setEmailmessage]=useState('');
     const { email, password } = formData;
     console.log({email,password})
     const [error, setError] = useState();
@@ -55,11 +55,7 @@ function SignupPage() {
             setEmailError('Please enter email');
             } 
 
-            else if(password === ''){
-              formValid = false;
-              setPasswordError('Please enter password');
-            }
-
+        
             else if (!email.match(emailPattern)) {
             formValid = false;
             setEmailError('Please enter email in valid format');
@@ -71,7 +67,7 @@ function SignupPage() {
         
             if(formValid){
                 try{
-                    const response = await fetch(API_URL.LOGIN,{
+                    const response = await fetch(API_URL.FORGOT_PASSWORD,{
                         method:'POST',
                         body:JSON.stringify(formData),
                         headers:{
@@ -80,7 +76,7 @@ function SignupPage() {
                     });
                     const data = await response.json();
                     
-                    // console.log(data.error);
+                    console.log(data);
 
                     if(data.error){
                        
@@ -97,8 +93,7 @@ function SignupPage() {
                         }
 
                         else{
-                            setPasswordError(data.error)
-
+                            
                              setFormData({
                             user_name: '',
                             email:  `${formData.email}`,
@@ -115,10 +110,11 @@ function SignupPage() {
                       // document.cookie = `token=${data.token}; path=/`;
                       // setauthToken(`${data.token}`);
                       
-                      setauthToken(data.token); // Setting the authToken from the response
-                      console.log(`Auth Token: ${authToken}`);
-                        alert("Login successfully")
-                    navigate.push('/');
+                    //   setauthToken(data.token); // Setting the authToken from the response
+                    //   console.log(`Auth Token: ${authToken}`);
+                    //     alert("Login successfully")
+                    // navigate.push('/');
+                    setEmailmessage('Email has been sent');
 
                     }
                 }
@@ -136,9 +132,9 @@ function SignupPage() {
 // returning the body 
   return (
     <>
-      {authToken=='' &&  <div className="text-left  bg-gradient-to-r from-grad_red to-grad_white shadow-lg">
-    <h1 className="text-2xl font-bold text-center mb-4">Login is required</h1>
-    <p className="text-center">Please login to continue to the service.</p>
+      {emailmessage !='' &&  <div className="text-left  bg-gradient-to-r from-grad_red to-grad_white shadow-lg">
+    <h1 className="text-2xl font-bold text-center mb-4">Email has been sent</h1>
+   
   </div>}
       <div className=" p-10 min-h-screen flex items-center justify-center bg-gray-100  bg-gradient-to-r from-grad_red to-grad_white">
         
@@ -154,25 +150,13 @@ function SignupPage() {
               <input onChange={(e)=>handleChange(e)} type="text" id="email" name="email" value={formData.email} className="mt-1 p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-blue-500" />
             </div>
           {emailError && <p style={{ color: 'red' }}>{emailError}</p>}
-
-            
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-600">Password:</label>
-              <input onChange={(e)=>handleChange(e)} type="password" id="password" name="password" value={formData.password} className="mt-1 p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-blue-500" />
-            </div>
-            {passworderror && <p style={{ color: 'red' }}>{passworderror}</p>}
-
-        
-
-       
-            
+         
             
             <button type="submit" className="w-full bg-customRed text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-500">
-              Login
+              Change Password
             </button>
           </form>
           <a href="/signUp" className="text-blue-500 hover:text-blue-700">Don&apos;t have an account?</a>
-          <a href="/ForgetPassword" className="text-blue-500 hover:text-blue-700">    Forget Password</a>
 
         </div>
       </div>

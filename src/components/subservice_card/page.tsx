@@ -18,7 +18,7 @@ interface ServiceCardProps {
 function Page({ state }: ServiceCardProps) {
   return (
     <>
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4 md:px-10 py-10 gap-6 bg-gradient-to-r from-grad_red to-grad_white'>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10 px-4 md:px-10 py-10 gap-6 bg-gradient-to-r from-grad_red to-grad_white'>
         {state.map((item, index) => (
           <div key={index} className="flex flex-col justify-between rounded-lg bg-white overflow-hidden shadow-xl transition-shadow duration-300 ease-in-out hover:shadow-2xl">
             <img src={item.subsvs_img} alt="Photo" className="w-full h-48 object-cover" />
