@@ -1,9 +1,11 @@
 
 import type { Metadata } from "next";
+import {SessionProvider} from 'next-auth/react';
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/shared/header/page";
 import Footer from "@/components/shared/footer/page";
+import AppWrapper from '@/context/index';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,9 +23,15 @@ export default function RootLayout({
     <html lang="en">
        
      <body>
+  
+    <AppWrapper>
      <Header/>
-     {children}
+   
+      {children}
+    
      <Footer/>
+     </AppWrapper>
+   
      </body>
     
     
