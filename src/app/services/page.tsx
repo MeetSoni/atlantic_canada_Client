@@ -19,6 +19,8 @@ interface Service {
 function Page(): JSX.Element {
   const [services, setServices] = useState<Service[]>([]);
   const [isLoading, setIsLoading] = useState(true); // Added state to track loading status
+  const [serviceimg,setserviceimg]=useState('https://imgvisuals.com/cdn/shop/products/animated-studying-girl-character-648111.gif?v=1697059330');
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,8 +56,8 @@ function Page(): JSX.Element {
           <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt soluta fugiat cumque beatae in voluptas tempore, deserunt repellat nemo eaque, quibusdam iure aliquam! Voluptates sint blanditiis, quo impedit mollitia libero beatae ipsa facilis numquam nostrum laborum nemo reiciendis voluptate hic ullam culpa odio magnam officiis accusamus delectus dolores dolorem possimus.</p>
         </div>
         <div className='lg:w-2/4 md:w-full '>
-          <Image
-            src="/images/service_page.jpg"
+          <img
+            src={serviceimg}
             alt="Logo"
             width={0}
             height={50}
