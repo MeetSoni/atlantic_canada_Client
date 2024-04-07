@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faRunning, faPhone, faMapMarkerAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons';
@@ -10,11 +10,11 @@ interface InfoCardProps {
   title: string;
   description: string;
 }
+
 interface FormData {
   name: string;
   email: string;
   message: string;
- 
 }
 
 const InfoCard: React.FC<InfoCardProps> = ({ icon, title, description }) => {
@@ -42,6 +42,7 @@ const Contact: React.FC = () => {
     email: '',
     message: ''
   });
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -53,35 +54,48 @@ const Contact: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Email",email);
-    console.log("name",name);
-    console.log("message",message);
-    
-    
-    // Update the formData state with the new FormData object
- 
-    console.log(formData);
-    
-    // Handle sending the message using FormData
+
+    // Your code for sending the email...
     const response = await fetch(`${API_URL.SEND_CONTACT_INFO}`, {
       method: 'POST',
-      body: JSON.stringify(formData), // Use FormData object as the body
+      body: JSON.stringify(formData),
       headers:{
         'Content-Type':'application/json'
-        }
+      }
     });
-    const data = await response.json();
 
-    console.log(data);
+
+    // Assuming email is sent successfully
+    if(response.ok){
+      setShowPopup(true);
+    }
 
     // Reset form fields
-    setEmail('');
-    setName('');
-    setMessage('');
+    setFormData({
+      name: '',
+      email: '',
+      message: ''
+    });
   };
+
+  useEffect(() => {
+    if (showPopup) {
+      const timeout = setTimeout(() => {
+        setShowPopup(false);
+      }, 5000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [showPopup]);
 
   return (
     <div className=" py-12 px-6 lg:px-20">
+      {showPopup && (
+        <div className="bg-green-200 border border-green-600 text-green-900 px-4 py-2 rounded-md shadow-md my-4">
+          Email sent successfully!
+        </div>
+      )}
+
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden md:flex md:p-6 lg:p-6 p-6 md:max-w-6xl">
         <div className="w-full">
           <div className="text-center">
