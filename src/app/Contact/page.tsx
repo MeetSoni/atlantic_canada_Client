@@ -1,12 +1,20 @@
-import React from 'react';
+'use client'
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faRunning, faPhone, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faRunning, faPhone, faMapMarkerAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import API_URL from '@/constants/constant';
 
 interface InfoCardProps {
   icon: IconDefinition;
   title: string;
   description: string;
+}
+interface FormData {
+  name: string;
+  email: string;
+  message: string;
+ 
 }
 
 const InfoCard: React.FC<InfoCardProps> = ({ icon, title, description }) => {
@@ -26,8 +34,54 @@ const InfoCard: React.FC<InfoCardProps> = ({ icon, title, description }) => {
 };
 
 const Contact: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [message, setMessage] = useState('');
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    email: '',
+    message: ''
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Email",email);
+    console.log("name",name);
+    console.log("message",message);
+    
+    
+    // Update the formData state with the new FormData object
+ 
+    console.log(formData);
+    
+    // Handle sending the message using FormData
+    const response = await fetch(`${API_URL.SEND_CONTACT_INFO}`, {
+      method: 'POST',
+      body: JSON.stringify(formData), // Use FormData object as the body
+      headers:{
+        'Content-Type':'application/json'
+        }
+    });
+    const data = await response.json();
+
+    console.log(data);
+
+    // Reset form fields
+    setEmail('');
+    setName('');
+    setMessage('');
+  };
+
   return (
-    <div className="bg-gradient-to-r from-grad_red to-grad_white py-12 px-6 lg:px-20">
+    <div className=" py-12 px-6 lg:px-20">
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden md:flex md:p-6 lg:p-6 p-6 md:max-w-6xl">
         <div className="w-full">
           <div className="text-center">
@@ -35,17 +89,20 @@ const Contact: React.FC = () => {
             <p className="text-gray-600 mt-4">Any questions or remarks? Just write us a message!</p>
           </div>
           <div className="mt-8">
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full px-3 mb-6 md:mb-0 md:w-1/2">
-                  <input type="text" className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Enter a valid email address"/>
+                  <input type="email" className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Enter a valid email address" name='email' value={formData.email} onChange={(e)=>handleChange(e)}required />
                 </div>
                 <div className="w-full px-3 md:w-1/2">
-                  <input type="text" className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Enter your Name"/>
+                  <input type="text" className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Enter your Name" name='name' value={formData.name }onChange={(e)=>handleChange(e)} required />
                 </div>
               </div>
-              <div className="text-center mt-8">
-                <button className="btn-transform bg-customRed hover:bg-pink-700 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110">SUBMIT</button>
+              <div className="mb-6">
+                <textarea className="w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Write your message here" rows={4} name='message' value={formData.message} onChange={(e)=>handleChange(e)} required></textarea>
+              </div>
+              <div className="text-center">
+                <button type="submit" className="btn-transform bg-customRed hover:bg-pink-700 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110">SUBMIT</button>
               </div>
             </form>
           </div>
@@ -55,6 +112,7 @@ const Contact: React.FC = () => {
         <InfoCard icon={faRunning} title="ABOUT CLUB" description="Running Guide Workouts" />
         <InfoCard icon={faPhone} title="PHONE (LANDLINE)" description="+1-674-897-0340\n+1-674-897-0341" />
         <InfoCard icon={faMapMarkerAlt} title="OUR OFFICE LOCATION" description="The Atlantic Canada Consultation\nToronto Downtown, ON, CANADA" />
+        <InfoCard icon={faEnvelope} title="SEND US A MESSAGE" description="Feel free to write us a message!" />
       </div>
     </div>
   );

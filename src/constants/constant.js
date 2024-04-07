@@ -10,7 +10,9 @@ export default {
   GET_SERVICE_DATA: `${API_URL}services`,
   YOUTUBE:`${API_URL}youtube`,
   RESETPASSWORD:`${API_URL}user/reset-password`,
-  ABOUT_US:`${API_URL}about_us`
+  ABOUT_US:`${API_URL}about_us`,
+  SEND_CONTACT_INFO:`${API_URL}user/sendcontactinfo`
+
   
 
 };
