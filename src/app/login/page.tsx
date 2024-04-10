@@ -21,7 +21,10 @@ function SignupPage() {
     //state to handle form data
  
     const {authToken,setauthToken}=useAppContext();
+    const { auth_userName, setauthuserName } = useAppContext();
+    const { auth_provinceId,setprovinceId }=useAppContext();
     const [checkuser,setcheckuser]=useState('');
+    const {profilePic,setProfilePic}=useAppContext();
     const [formData, setFormData] = useState<FormData>({
         user_name: '',
         email: '',
@@ -35,6 +38,7 @@ function SignupPage() {
     const { email, password } = formData;
     console.log({email,password})
     const [error, setError] = useState();
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false); // State for success popup
   
     //router to navigate page
     const navigate = useRouter();
@@ -79,6 +83,7 @@ function SignupPage() {
                         }
                     });
                     const data = await response.json();
+                    console.log(data)
                     
                     // console.log(data.error);
 
@@ -114,11 +119,13 @@ function SignupPage() {
 
                       // document.cookie = `token=${data.token}; path=/`;
                       // setauthToken(`${data.token}`);
-                      
-                      setauthToken(data.token); // Setting the authToken from the response
-                      console.log(`Auth Token: ${authToken}`);
-                        alert("Login successfully")
-                    navigate.push('/');
+                      console.log(data.data.province_id)
+                      setauthToken(data.token); 
+                      setauthuserName(data.data.email)// Setting the authToken from the response
+                      setprovinceId(data.data.province_id);
+                      setProfilePic(data.data.profile_image);
+                      setShowSuccessPopup(true); // Open the success popup
+                      navigate.push(`/profile/${data.data.email}`);
 
                     }
                 }
@@ -136,13 +143,13 @@ function SignupPage() {
 // returning the body 
   return (
     <>
-      {authToken=='' &&  <div className="text-left  bg-gradient-to-r from-grad_red to-grad_white shadow-lg">
+      {authToken=='' &&  <div className="text-left  mt-4 shadow-lg">
     <h1 className="text-2xl font-bold text-center mb-4">Login is required</h1>
     <p className="text-center">Please login to continue to the service.</p>
   </div>}
-      <div className=" p-10 min-h-screen flex items-center justify-center bg-gray-100  bg-gradient-to-r from-grad_red to-grad_white">
+      <div className=" p-10 min-h-screen flex items-center justify-center bg-gray-100  bg-white">
         
-        <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
+        <div className="bg-white p-8 rounded shadow-md w-full max-w-md bg-gradient-to-r from-grad_red to-grad_white">
           <h2 className="text-3xl font-bold mb-6">Login</h2>
          {error && <p style={{ color: 'red' }}>{error}</p>}
 
@@ -162,7 +169,9 @@ function SignupPage() {
             </div>
             {passworderror && <p style={{ color: 'red' }}>{passworderror}</p>}
 
-        
+            <div className="flex justify-center">
+                  <a href="/privacy_policy" className="text-green-500 hover:text-blue-700">Before login read Privacy Policy</a>
+        </div>
 
        
             
@@ -172,13 +181,29 @@ function SignupPage() {
             </button>
           </form>
           <a href="/signUp" className="text-blue-500 hover:text-blue-700">Don&apos;t have an account?</a>
-          <a href="/ForgetPassword" className="text-blue-500 hover:text-blue-700">    Forget Password</a>
+          <a href="/ForgetPassword" className="text-blue-500 hover:text-blue-700 mx-10"> Forget Password</a>
+         
 
         </div>
+        
       </div>
+      {showSuccessPopup && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-8 rounded shadow-md">
+            <h2 className="text-3xl font-bold mb-4">Success</h2>
+            <p>Login successful!</p>
+            <button
+              className="bg-customRed text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-500 mt-4"
+              onClick={() => setShowSuccessPopup(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </>
-
   );
 }
 
 export default SignupPage;
+

@@ -1,191 +1,279 @@
 'use client'
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import  API_URL  from '@/constants/constant';
+import API_URL from '@/constants/constant';
 import { useAppContext } from '@/context';
 
+interface Province {
+  _id: string;
+  province: string;
+  description: string;
+  images: string[];
+}
 
-//defining type
 interface FormData {
-    user_name: string;
-    email: string;
-    password: string;
-    user_type: string;
-    province: string;
-  }
+  user_name: string;
+  email: string;
+  password: string;
+  user_type: string;
+  province_id: string;
+  province_name:string;
+  profile_image:string;
+}
 
-//signup page function
 function SignupPage() {
-  const {authToken,setauthToken}=useAppContext();
+  const { authToken, setauthToken } = useAppContext();
+  const {auth_userName,setauthuserName}=useAppContext();
+  const {auth_provinceId,setprovinceId}=useAppContext();
+  const {profilePic,setProfilePic}=useAppContext();
+  const [provinces, setProvinces] = useState<Province[]>([]);
+  const [selectedProvince, setSelectedProvince] = useState<string>('');
+  const [isUpload,setIsUpload] = useState(false);
 
-    //state to handle form data
-    const [formData, setFormData] = useState<FormData>({
-        user_name: '',
-        email: '',
-        password: '',
-        user_type: '',
-        province: ''
-      });
-    // various states
-    const [commonError, setcommonError] = useState('');
-    const [emailError, setEmailError] = useState('');
-    const [usernameError, setusernameError] = useState('');
-    const [passwordError, setpasswordError] = useState('');
-    const [usertypeError, setusertypeError] = useState('');
-    const [provinceError, setprovinceError] = useState('');
+  const [formData, setFormData] = useState<FormData>({
+    user_name: '',
+    email: '',
+    password: '',
+    user_type: '',
+    province_id: '',
+    province_name:'',
+    profile_image:''
+  });
+  const [commonError, setCommonError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [usernameError, setUsernameError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [usertypeError, setUsertypeError] = useState('');
+  const [provinceError, setProvinceError] = useState('');
+  const[file,setfile]=useState({});
 
-    const { user_name, email, password, user_type, province } = formData;
-    console.log({ email, password } )
-    const [error, setError] = useState();
+  const { user_name, email, password, user_type, province_id } = formData;
+  const navigate = useRouter();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${API_URL.GET_ALL_HOME_PROVINCES}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data: Province[] = await response.json();
+        console.log(data);
+        setProvinces(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
   
-    //router to navigate page
-    const navigate = useRouter();
+  }, [formData.profile_image]);
 
-    // handlechange event for input
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-      setFormData({ ...formData, [e.target.name]: e.target.value });    
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+
+    if (name === 'province_id') {
+        // Find the selected province data from the provinces array
+        const selectedProvinceData = provinces.find((province) => province._id === value);
+
+        // Update province_id in formData with the _id of the selected province
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            province_id: selectedProvinceData ? selectedProvinceData._id : '',
+            province_name: selectedProvinceData ? selectedProvinceData.province : ''
+        }));
+    } 
     
-    // handlesubmit event
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>)=> {
-        e.preventDefault();
-            let formValid = true;
-            const emailPattern =
-            /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-            
-            if(user_name === '' && email === '' && password === '' && user_type === '' && province === ''){
-              formValid=false;
-              setcommonError('All the fields are required');
-            }
-            else if( user_name === '' ){
-              formValid = false;
-            setusernameError('Please enter username');  
-            setcommonError('');
+    else if (name === 'profile_image') {
+        // Handle file upload
+        const fileInput = e.target as HTMLInputElement;
+        if (fileInput.files && fileInput.files[0]) {
+            const file = fileInput.files[0];
+            setfile(file);
+            // setFormData(prevData => ({
+            //   ...prevData,
+            //   subsvs_img: file // Store the image file object directly
+            // }));
+        }
+    } 
+    
+    else {
+        // For other input fields, update formData normally
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: value
+        }));
+    }
+};
 
-            }
-           else if (email === '') {
-            formValid = false;
-            setEmailError('Please enter email');
-            setcommonError('');
+const  handleSaveButtonClick = () =>
+{
+    console.log("click handle")
+    if(isUpload)
+    {
+        uploadphoto()
+    }else{
+      handleSubmit()
+    }
 
-            } else if (!email.match(emailPattern)) {
-            formValid = false;
-            setEmailError('Please enter email in valid format');
-            setcommonError('');
-           
+}
+  function getProvinceById(provinceId : String) {
+    return provinces.find(province => province._id === provinceId);
+}
 
-            } 
-           
-          
+const uploadphoto = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  const fileFormData = new FormData();
+  console.log("file", file);
+  fileFormData.append('file', file);
 
-            else if( password === '' ){
-              formValid = false;
-            setpasswordError('Please enter password');
-            setcommonError('');
+  try {
+      const response = await fetch('http://localhost:5500/api/addprofilepic', {
+          method: 'POST',
+          body: fileFormData
+      });
 
-            }
+      if (!response.ok) {
+          throw new Error('Network response was not ok');
+      }
 
+      const data = await response.json();
+      console.log('File uploaded successfully:', data.url);
+      setIsUpload(true)
+      
+      // Update state with the image URL
+        setFormData(prevData => ({
+          ...prevData,
+          profile_image: data.url
+      }));
 
-            else if( user_type === '' ){
-              formValid = false;
-            setusertypeError('Please enter type of user');
-            setcommonError('');
+      // Now call the function after setting state
+      // saveSubServiceDataApi();
+  } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+};
+  
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+   
+     let formValid = true;
 
-            }
+     
+    const provinceIdToFind = formData.province_id;
+    const foundProvince = getProvinceById(provinceIdToFind);
 
-            else if( province === '' ){
-              formValid = false;
-            setprovinceError('Please enter province');
-            setcommonError('');
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      province_name: foundProvince ? foundProvince.province : ''
+    }));
 
-            }
-            
-            else {
-            formValid = true;
-            setEmailError('');
-            setcommonError('');
+    // Validation logic
 
-            }
-        
-            if(formValid){
-                try{
-                    const response = await fetch(API_URL.SIGNUP,{
-                        method:'POST',
-                        body:JSON.stringify(formData),
-                        headers:{
-                        'Content-Type':'application/json'
-                        }
-                    });
-                    const data = await response.json();
-                    // console.log(data.message);
+    if (formValid) {
+      try {
+        const response = await fetch("http://localhost:5500/api/user/signup", {
+          method: 'POST',
+          body: JSON.stringify(formData),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const signupdata = await response.json();
+        console.log(signupdata.data.email);
 
-                    if(data.message){
-                      setEmailError(`${data.message}`);
-                    }
+        if (signupdata.message) {
+          setEmailError(`${signupdata.message}`);
+        } else {
+          setauthToken(signupdata.token);
+          setauthuserName(signupdata.data.email);
+          setprovinceId(signupdata.data.province_id);
+          setProfilePic(signupdata.data.profile_image);
+          alert("Signup successful");
+          navigate.push('/');
+        }
+      } catch (err: any) {
+        console.log(err);
+      }
+    }
+  };
 
-                    else{
-                      console.log(data.token)
-                      setauthToken(data.token); // Setting the authToken from the response
-                      console.log(`Auth Token: ${authToken}`);
-                        alert("signup successfully")
-                    navigate.push('/');
-                    }
-                 
-                }
-                
-                catch (err: any) {
-                    console.log(err);
-                    setError(err.response.data.errors || 'something went wrong');
-                }
-                }
-            
-
-      };
-
-
-// returning the body 
   return (
     <>
-<div className="p-10 items-center justify-center bg-gray-100 bg-gradient-to-r from-grad_red to-grad_white">
-  <div className="bg-white p-8  rounded shadow-md  max-w-md mx-20">
-    <h2 className="text-3xl font-bold mb-6">Signup</h2>
-    {error && <p className="text-red-500">{error}</p>}
-    <form id="signup-form" className="space-y-4" onSubmit={handleSubmit}>
-      {commonError && <p className="text-red-500">{commonError}</p>}
-      <div>
-        <label htmlFor="user_name" className="block text-sm font-medium text-gray-600">Username <span className="text-red-500">*</span></label>
-        <input onChange={(e)=>handleChange(e)} type="text" id="user_name" name="user_name" className="mt-1 p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-blue-500" />
-      </div>
-      {usernameError && <p className="text-red-500">{usernameError}</p>}
-      <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-600">Email <span className="text-red-500">*</span></label>
-        <input onChange={(e)=>handleChange(e)} type="text" id="email" name="email" className="mt-1 p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-blue-500" />
-      </div>
-      {emailError && <p className="text-red-500">{emailError}</p>}
-      <div>
-        <label htmlFor="password" className="block text-sm font-medium text-gray-600">Password <span className="text-red-500">*</span></label>
-        <input onChange={(e)=>handleChange(e)} type="password" id="password" name="password" className="mt-1 p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-blue-500" />
-      </div>
-      {passwordError && <p className="text-red-500">{passwordError}</p>}
-      <div>
-        <label htmlFor="user_type" className="block text-sm font-medium text-gray-600">User Type <span className="text-red-500">*</span></label>
-        <input onChange={(e)=>handleChange(e)} type="text" id="user_type" name="user_type" className="mt-1 p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-blue-500" />
-      </div>
-      {usertypeError && <p className="text-red-500">{usertypeError}</p>}
-      <div>
-        <label htmlFor="province" className="block text-sm font-medium text-gray-600">Province <span className="text-red-500">*</span></label>
-        <input onChange={(e)=>handleChange(e)} type="text" id="province" name="province" className="mt-1 p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-blue-500" />
-      </div>
-      {provinceError && <p className="text-red-500">{provinceError}</p>}
-      <button type="submit" className="w-full bg-customRed text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-500">
-        Signup
-      </button>
-    </form>
-  </div>
-</div>
+      <div className="p-10 min-h-screen flex items-center justify-center bg-gray-100 bg-white ">
+        <div className="bg-white p-8 rounded shadow-md w-full max-w-md bg-gradient-to-r from-grad_red to-grad_white">
+          <h2 className="text-3xl font-bold mb-6">Signup</h2>
+          <form id="signup-form" className="space-y-4" onSubmit={handleSaveButtonClick}>
+            {/* Form fields and error messages */}
+            {/* Username */}
+            <div>
+              <label htmlFor="user_name" className="block text-sm font-medium text-gray-600">Username <span className="text-red-500">*</span></label>
+              <input onChange={handleChange} type="text" id="user_name" name="user_name" className="mt-1 p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-blue-500" />
+            </div>
+            {usernameError && <p className="text-red-500">{usernameError}</p>}
+            {/* Email */}
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-600">Email <span className="text-red-500">*</span></label>
+              <input onChange={handleChange} type="text" id="email" name="email" className="mt-1 p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-blue-500" />
+            </div>
+            {emailError && <p className="text-red-500">{emailError}</p>}
+            {/* Password */}
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-600">Password <span className="text-red-500">*</span></label>
+              <input onChange={handleChange} type="password" id="password" name="password" className="mt-1 p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-blue-500" />
+            </div>
+            {passwordError && <p className="text-red-500">{passwordError}</p>}
+            {/* User Type */}
+            <div>
+              <label htmlFor="user_type" className="block text-sm font-medium text-gray-600">User Type <span className="text-red-500">*</span></label>
+              <input onChange={handleChange} type="text" id="user_type" name="user_type" className="mt-1 p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-blue-500" />
+            </div>
+            {usertypeError && <p className="text-red-500">{usertypeError}</p>}
+            {/* Province dropdown */}
+            <div>
+              <label htmlFor="province_id" className="block text-sm font-medium text-gray-600">Province <span className="text-red-500">*</span></label>
+              <select
+  id="province_id"
+  name="province_id"
+  value={formData.province_id} // Use formData.province_id as the value for the dropdown
+  onChange={handleChange}
+  className="mt-1 p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+>
+  <option value="">Select a province</option>
+  {provinces.map((province) => (
+    <option key={province._id} value={province._id}>
+      {province.province}
+    </option>
+  ))}
+              </select>
 
+            </div>
+            {provinceError && <p className="text-red-500">{provinceError}</p>}
+
+            <div>
+              <label htmlFor="profile_image" className="block text-sm font-medium text-gray-600">profile_image <span className="text-red-500">*</span></label>
+              <input onChange={handleChange} type="file" accept="image/*" id="profile_image" name="profile_image" className="mt-1 p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-blue-500" />
+            </div>
+
+            <div className="flex justify-center">
+                  <a href="/privacy_policy" className="text-green-500 hover:text-blue-700">Before signup read privacy policy</a>
+        </div>
+
+            {/* Submit button */}
+            <button type="submit" className="w-full bg-customRed text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-500">
+              Signup
+            </button>
+          </form>
+        </div>
+      </div>
     </>
-
   );
 }
 

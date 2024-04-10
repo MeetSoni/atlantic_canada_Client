@@ -5,11 +5,15 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/sidebar/page';
 import { useAppContext } from '@/context';
+import { FaUserCircle } from 'react-icons/fa';
 
 
 export default function Header() {
   const navigate = useRouter();
   const {authToken,setauthToken}=useAppContext();
+  const {auth_userName,setauthuserName}=useAppContext();
+  const {auth_provinceId,setprovinceId}=useAppContext();
+  const {profilePic}=useAppContext();
   const [scrolling, setScrolling] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -26,14 +30,9 @@ export default function Header() {
   };
 
   const handleservice=()=>{
-    if(authToken ==''){
-      navigate.push('/login')
-    }
-
-    else{
+    
       navigate.push('/services')
-
-    }
+ 
   }
   const handleSignup=()=>{
     navigate.push('/signUp');
@@ -41,11 +40,20 @@ export default function Header() {
 
   const handlelogout=()=>{
     setauthToken('');
+    setauthuserName('');
+    setprovinceId('');
+    navigate.push('/');
+
   }
+
+  const handleprofile = () => {
+    navigate.push(`/profile/${auth_userName}`);
+  };
 
   const handleLogin=()=>{
     navigate.push('/login');
   }
+  
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
 
@@ -55,7 +63,7 @@ export default function Header() {
   }, []);
 
   return (
-    <div className={`bg-white h-13 z-10 shadow-lg top-0 text-b_head bg-gradient-to-r from-grad_red to-grad_white`}>
+    <div className={`bg-white h-13 z-10 shadow-lg top-0 text-b_head `}>
       {/* Header */}
       <nav className={` p-7  lg:flex md:block sm:block items-center justify-between transition-all duration-300 ${scrolling ? 'py-1' : 'py-3'}`}>
         <div className="font-bold  float-left">
@@ -68,6 +76,7 @@ export default function Header() {
         </div>
         <div className="text-2xl text-center text-customRed font-bold ">
           <h1>Atlantic Canada Settlers</h1>
+          
         </div>
   
        {/* <nav className={`bg-white  bg-gradient-to-r from-grad_red to-grad_white  p-4 mx-auto flex items-center justify-between sticky top-0 w-full transition-all duration-300 ${scrolling ? 'py-1' : 'py-4'}`}> */}
@@ -76,7 +85,7 @@ export default function Header() {
           <ul className={`hidden ml-10 lg:flex space-x-10 text-m`}>
             <li>
               <a href="/" className="text-customRed 	">
-                Home
+                Home 
               </a>
             </li>
             <li>
@@ -100,6 +109,9 @@ export default function Header() {
               <a href="/Contact" className="text-customRed">
                 Contact
               </a>
+
+
+             
             </li>
 
           </ul>
@@ -113,9 +125,14 @@ export default function Header() {
          {/* {authToken ==='' &&  <button onClick={handleSignup} className="text-white bg-customRed py-2 px-4 rounded hover:bg-white hover:text-customRed hover:border hover:border-solid hover:border-customRed transition duration-300">
             Signup
           </button>} */}
-       { authToken!='' &&    <button onClick={handlelogout} className="text-white bg-customRed py-2 px-4 rounded hover:bg-white hover:text-customRed hover:border hover:border-solid hover:border-customRed transition duration-300">
+       {/* { authToken!='' &&    <button onClick={handlelogout} className="text-white bg-customRed py-2 px-4 rounded hover:bg-white hover:text-customRed hover:border hover:border-solid hover:border-customRed transition duration-300">
             logout
-          </button>}
+          </button>} */}
+
+          { authToken!='' &&    <button onClick={handleprofile} style={{ position: 'relative', overflow: 'hidden', borderRadius: '50%', width: 40, height: 40 }}>
+  <img src={profilePic} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+</button>
+}
         </div>
   
         {/* Mobile Menu Button */}

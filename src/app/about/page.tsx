@@ -22,6 +22,7 @@ function About() {
     const fetchData = async () => {
       try {
         const response = await fetch(API_URL.ABOUT_US, {
+          
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -50,7 +51,7 @@ function About() {
   return (
     <>
       {/* Hero and Mission Sections... */}
-      <div className="bg-gradient-to-r from-grad_red to-grad_white text-gray-800 text-center py-20 px-4">
+      <div className=" text-gray-800 text-center py-20 px-4">
         <h1 className="text-5xl font-bold mb-4 drop-shadow-md">{aboutUsInfo.title}</h1>
         <p className="text-white mx-auto max-w-2xl text-lg leading-relaxed text-gray-700 shadow-lg p-6 bg-gradient-to-r from-red-500 to-red-100 rounded-lg">
           {aboutUsInfo.description}
@@ -58,7 +59,7 @@ function About() {
       </div>
 
       {/* Mission Statement with Image */}
-      <div className="flex flex-wrap items-center bg-gradient-to-r from-grad_red to-grad_white">
+      <div className="flex flex-wrap items-center ">
         <div className="w-full md:w-1/2 p-5">
           <img src="https://newlifevisa.com/wp-content/uploads/2019/10/138.jpg" alt="Mission" className="rounded-lg shadow-lg" />
         </div>
@@ -71,7 +72,7 @@ function About() {
       </div>
 
       {/* Team Section with Dynamic Data */}
-      <div className="py-10 bg-gray-50 bg-gradient-to-r from-grad_red to-grad_white">
+      <div className="py-10 ">
         <div className="container mx-auto px-2">
           <h2 className="text-3xl font-bold text-center mb-5">Meet Our Team</h2>
           <div className="grid grid-cols-1 p-5 text-white md:grid-cols-2 lg:grid-cols-3 gap-2">

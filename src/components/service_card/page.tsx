@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useAppContext } from "@/context";
 
 interface Service {
   _id: string;
@@ -18,6 +19,17 @@ interface ServiceCardProps {
 
 function Page({ state }: ServiceCardProps) {
   const navigate = useRouter();
+  const { authToken, setauthToken } = useAppContext();
+  const { auth_userName, setauthuserName } = useAppContext();
+  const { auth_provinceId, setprovinceId } = useAppContext();
+  const { selectedItemId,setSelectedItemId}=useAppContext();
+
+  const handleExploreClick = (itemId: string) => {
+    setSelectedItemId(itemId);
+   {authToken ? navigate.push('/services/subservices'): navigate.push('/login')} // Navigate to the subservices page
+  };
+
+  
 
   return (
     <>
@@ -35,11 +47,12 @@ function Page({ state }: ServiceCardProps) {
                 <p className="text-gray-600 text-sm">{item.svs_info}</p> {/* Removed mb-4 to use space more efficiently */}
               </div>
               <div> {/* This div wraps the button ensuring it stays at the bottom */}
-                <Link href={`/services/${item._id}`}>
-                  <button className="mt-4 inline-block bg-customRed hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full text-center transition-colors duration-200 ease-in-out">
-                    Explore More
-                  </button>
-                </Link>
+                <button 
+                  onClick={() => handleExploreClick(item._id)}
+                  className="mt-4 inline-block bg-customRed hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full text-center transition-colors duration-200 ease-in-out"
+                >
+                  Explore More
+                </button>
               </div>
             </div>
           </div>

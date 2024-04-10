@@ -37,7 +37,7 @@ function Page(): JSX.Element {
   }, []);
 
   return (
-    <div className="container mx-auto p-8 bg-gradient-to-r bg-gradient-to-r from-grad_red to-grad_white">
+    <div className="container mx-auto p-8 ">
       <h1 className="text-3xl font-bold mb-8 text-center text-white">Best Videos</h1>
       <div className="grid grid-cols-1 md:grid-cols-
 3 lg:grid-cols-3 gap-8">
@@ -55,8 +55,7 @@ function Page(): JSX.Element {
 <div className="font-bold text-xl mb-2 text-gray-800" style={{ minHeight: '64px' }}>{item.title}</div>
 </div>
 <div className="px-6 pb-4 flex justify-between items-center">
-<span className="inline-block bg-red-500 text-white px-3 py-1 text-sm font-semibold rounded-full">Category</span>
-<span className="inline-block bg-gray-200 text-gray-700 px-3 py-1 text-sm font-semibold rounded-full">Views</span>
+
 </div>
 </div>
 ))}

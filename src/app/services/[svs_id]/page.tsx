@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Subservice_card from '@/components/subservice_card/page';
 import { useParams } from 'next/navigation';
 import API_URL from '@/constants/constant';
+import { useAppContext } from '@/context';
 
 interface SubService {
   svs_id: string;
@@ -24,17 +25,24 @@ interface PageProps {
 function Page({ params }: PageProps) {
   const [subServices, setSubServices] = useState<SubService[]>([]);
   const [isLoading, setIsLoading] = useState(true); // Added state to track loading status
-
+  const {authToken,setauthToken}=useAppContext();
+  const { auth_userName, setauthuserName } = useAppContext();
+  const { auth_provinceId,setprovinceId }=useAppContext();
+  const { selectedItemId,setSelectedItemId}=useAppContext();
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true); // Ensure loading state is true when starting to fetch data
       try {
         console.log(params.svs_id);
-        const response = await fetch(`${API_URL.GET_SERVICE_DATA}/${params.svs_id}`, {
-          method: 'GET',
+        const response = await fetch(`${API_URL.GET_SERVICE_DATA}`, {
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json'
-          }
+          },
+          body: JSON.stringify({
+            serviceId: selectedItemId, // Use params.svs_id from props
+            provinceId: auth_provinceId // Update with the correct provinceId value
+          })
         });
 
         if (!response.ok) {
@@ -58,7 +66,7 @@ function Page({ params }: PageProps) {
 
   return (
     <>
-      <div className='bg-gradient-to-r from-grad_red to-grad_white'>
+      <div className=''>
         {isLoading ? (
           <div>Loading data...</div> // Display this message while isLoading is true
         ) : (

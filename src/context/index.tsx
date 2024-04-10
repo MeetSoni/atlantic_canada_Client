@@ -5,6 +5,14 @@ import React, { createContext, useState, useContext, ReactNode, useEffect } from
 interface AppContextType {
   authToken: string;
   setauthToken: (authToken: string) => void;
+  auth_userName: string;
+  setauthuserName: (auth_userName: string) => void;
+  auth_provinceId: string;
+  setprovinceId: (auth_provinceId: string) => void;
+  selectedItemId: string;
+  setSelectedItemId: (selectedItemId: string) => void;
+  profilePic: string;
+  setProfilePic: (profilePic: string) => void;
 }
 
 // Create the context with a default value
@@ -16,25 +24,46 @@ interface AppWrapperProps {
 }
 
 export default function AppWrapper({ children }: AppWrapperProps) {
-  // Check if localStorage is available before using it
   const initialAuthToken = typeof window !== 'undefined' ? localStorage.getItem('authToken') || '' : '';
+  const initialauth_userName = typeof window !== 'undefined' ? localStorage.getItem('auth_userName') || '' : '';
+  const initialauth_provinceId = typeof window !== 'undefined' ? localStorage.getItem('auth_provinceId') || '' : '';
+  const initialSelectedItemId = typeof window !== 'undefined' ? localStorage.getItem('selectedItemId') || '' : '';
+  const initialProfilePic = typeof window !== 'undefined' ? localStorage.getItem('profilePic') || '' : '';
 
-  // Initialize authToken state with the value from localStorage if it exists
+  const [selectedItemId, setSelectedItemId] = useState<string>(initialSelectedItemId);
   const [authToken, setauthToken] = useState<string>(initialAuthToken);
+  const [auth_userName, setauthuserName] = useState(initialauth_userName);
+  const [auth_provinceId, setprovinceId] = useState(initialauth_provinceId);
+  const [profilePic, setProfilePic] = useState<string>(initialProfilePic);
 
-  // Effect to run whenever authToken changes
   useEffect(() => {
     if (authToken) {
-      // Store the authToken in localStorage when it changes
       localStorage.setItem('authToken', authToken);
+      localStorage.setItem('auth_userName', auth_userName);
+      localStorage.setItem('auth_provinceId', auth_provinceId);
+      localStorage.setItem('selectedItemId', selectedItemId);
+      localStorage.setItem('profilePic', profilePic);
     } else {
-      // Clear authToken from localStorage if it's empty
       localStorage.removeItem('authToken');
+      localStorage.removeItem('auth_userName');
+      localStorage.removeItem('auth_provinceId');
+      localStorage.removeItem('selectedItemId');
+      localStorage.removeItem('profilePic');
     }
-  }, [authToken]);
+  }, [authToken, auth_userName, auth_provinceId, selectedItemId, profilePic]);
 
-  // The value provided to the context needs to match the AppContextType
-  const contextValue = { authToken, setauthToken };
+  const contextValue = {
+    authToken,
+    setauthToken,
+    auth_userName,
+    setauthuserName,
+    auth_provinceId,
+    setprovinceId,
+    selectedItemId,
+    setSelectedItemId,
+    profilePic,
+    setProfilePic,
+  };
 
   return (
     <AppContext.Provider value={contextValue}>

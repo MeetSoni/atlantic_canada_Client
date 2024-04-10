@@ -53,6 +53,9 @@ const PrivacyPolicy = () => {
           For questions regarding this Policy or our practices, please contact us using the provided contact information. We reserve the right to update this Policy, and any changes will be posted on the app.
         </p>
       </div>
+      <div className="flex justify-center">
+                  <a href="/login" className="text-green-500 hover:text-blue-700">back to login page</a>
+        </div>
     </div>
   );
 };
