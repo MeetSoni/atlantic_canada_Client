@@ -143,14 +143,15 @@ function SignupPage() {
 // returning the body 
   return (
     <>
-      {authToken=='' &&  <div className="text-left  mt-4 shadow-lg">
-    <h1 className="text-2xl font-bold text-center mb-4">Login is required</h1>
-    <p className="text-center">Please login to continue to the service.</p>
-  </div>}
+   
       <div className=" p-10 min-h-screen flex items-center justify-center bg-gray-100  bg-white">
         
         <div className="bg-white p-8 rounded shadow-md w-full max-w-md bg-gradient-to-r from-grad_red to-grad_white">
-          <h2 className="text-3xl font-bold mb-6">Login</h2>
+        {authToken=='' &&  <div className="text-left  mt-4 shadow-lg">
+    <h1 className="text-2xl font-bold text-center mb-4">Login is required</h1>
+    <p className="text-center">Please login to continue to the service.</p>
+  </div>}
+          {/* <h2 className="text-3xl font-bold mb-6">Login</h2> */}
          {error && <p style={{ color: 'red' }}>{error}</p>}
 
           <form id="signup-form" className="space-y-4" onSubmit={handleSubmit}>
