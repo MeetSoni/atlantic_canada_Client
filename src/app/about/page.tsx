@@ -53,7 +53,7 @@ function About() {
       {/* Hero and Mission Sections... */}
       <div className=" text-gray-800 text-center py-20 px-4">
         <h1 className="text-5xl font-bold mb-4 drop-shadow-md">{aboutUsInfo.title}</h1>
-        <p className="text-white mx-auto max-w-2xl text-lg leading-relaxed text-gray-700 shadow-lg p-6 bg-gradient-to-r from-red-500 to-red-100 rounded-lg">
+        <p className="text-black mx-auto max-w-2xl text-lg leading-relaxed text-gray-700 shadow-lg p-6 bg-gradient-to-r from-grad_gray to-grad_white rounded-lg">
           {aboutUsInfo.description}
         </p>
       </div>
@@ -65,7 +65,7 @@ function About() {
         </div>
         <div className="w-full md:w-1/2 p-5">
           <h2 className="text-4xl font-bold mb-4">Our Mission</h2>
-          <p className="text-white mx-auto max-w-2xl text-lg leading-relaxed text-gray-700 shadow-lg p-6 bg-gradient-to-r from-red-500 to-red-100 rounded-lg">
+          <p className="text-black mx-auto max-w-2xl text-lg leading-relaxed text-gray-700 shadow-lg p-6 bg-gradient-to-r from-grad_gray to-grad_white rounded-lg">
             {aboutUsInfo.description}
           </p>
         </div>
@@ -75,14 +75,14 @@ function About() {
       <div className="py-10 ">
         <div className="container mx-auto px-2">
           <h2 className="text-3xl font-bold text-center mb-5">Meet Our Team</h2>
-          <div className="grid grid-cols-1 p-5 text-white md:grid-cols-2 lg:grid-cols-3 gap-2">
+          <div className="grid grid-cols-1 p-5  md:grid-cols-2 lg:grid-cols-3 gap-2">
             {aboutUsInfo.team_members.map((member, index) => (
               <div key={index} className="p-2">
-                <div className="bg-gradient-to-r from-red-500 to-red-100 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
+                <div className="bg-gradient-to-r from-grad_gray to-grad_white text-black rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
                   <img src={member.about_emp_img} alt={member.about_emp_name} className="w-full" style={{ height: '300px', objectFit: 'cover' }} />
-                  <div className="p-4 text-white">
+                  <div className="p-4 ">
                     <h3 className="font-headline text-lg mb-1">{member.about_emp_name}</h3>
-                    <p className="text-gray-600 text-sm text-white">{member.about_emp_job_title}</p>
+                    <p className="text-gray-600 text-sm ">{member.about_emp_job_title}</p>
                     {/* Optionally, display the description if needed */}
                   </div>
                 </div>
