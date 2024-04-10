@@ -29,6 +29,11 @@ export default function Header() {
     setMobileMenuOpen(false);
   };
 
+  const handleLogout = () => {
+    setauthToken('');
+    setauthuserName('');
+    navigate.push('/');
+};
   const handleservice=()=>{
     
       navigate.push('/services')
@@ -122,6 +127,13 @@ export default function Header() {
           {authToken=='' && <button onClick={handleLogin}  className="text-customRed bg-transparent border border-solid border-customRed py-2 px-4 rounded hover:bg-customRed hover:text-white transition duration-300">
             Login
           </button>}
+
+          <button
+                                onClick={handleLogout}
+                                className="w-1/2 py-2 px-4 mt-10 bg-customRed text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                            >
+                                Logout
+                            </button>
          {/* {authToken ==='' &&  <button onClick={handleSignup} className="text-white bg-customRed py-2 px-4 rounded hover:bg-white hover:text-customRed hover:border hover:border-solid hover:border-customRed transition duration-300">
             Signup
           </button>} */}
