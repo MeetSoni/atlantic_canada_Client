@@ -26,7 +26,7 @@ const config: Config = {
       colors: {
         customRed: '#B8292B',
         grad_white:'#ffffff',
-        grad_red:'#ffcccc',
+        grad_gray:'#eeeeee',
         b_head:"#4c669f"
       },
     },

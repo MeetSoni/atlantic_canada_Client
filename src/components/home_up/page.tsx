@@ -28,14 +28,10 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="bg-cover bg-center bg-fixed" style={{ backgroundImage: `url('https://capstoneatlantic.s3.amazonaws.com/city4.jpeg')` }}>
-      <h1>{auth_provinceId}</h1>
-      <h1>itemID: {selectedItemId}</h1>
-      <h1>profile image : {profilePic}</h1>
-
-      <div className="relative flex flex-col items-center justify-center mt-8">
-        <div className="bg-white bg-opacity-50 p-6 rounded-md shadow-lg w-full md:w-2/3 lg:w-1/2 bg-gradient-to-r from-grad_red to-grad_white">
-          <h1 className="text-2xl md:text-4xl font-bold text-customRed mb-6 text-center">Join us on your journey to Atlantic Canada</h1>
+    <div>
+      <div className="relative flex flex-col items-center justify-center  bg-cover bg-center bg-fixed "style={{ backgroundImage: `url('https://capstoneatlantic.s3.amazonaws.com/city4.jpeg')` }}>
+        <div className="bg-white bg-opacity-50 p-6 rounded-md shadow-lg mt-9 w-full md:w-2/3 lg:w-1/2 ">
+          <h1 className="text-2xl md:text-4xl font-bold text-customRed  mb-6 text-center">Join us on your journey to Atlantic Canada</h1>
           <p className="text-center">
             Embark on an exciting adventure as you plan your move to Atlantic Canada! At ATLANTIC CANADA SETTLERS, we understand that the transition to a new place comes with its own set of challenges. Thats why we have created this platform to be your companion throughout the entire process.
           </p>
