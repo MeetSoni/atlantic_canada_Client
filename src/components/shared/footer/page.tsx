@@ -10,8 +10,8 @@ function Footer() {
       <div className="w-full md:w-1/2 lg:w-1/4 mb-4 md:mb-0">
         <h2 className="text-lg font-semibold mb-4">Company</h2>
         <ul>
-          <a href="/">Home</a>
-          <a href="/about">About</a>
+          <a href="/"><li>Home</li></a>
+          <a href="/about"><li>About</li></a>
           <a href="/Contact"> <li>Contact</li></a>
         </ul>
       </div>
