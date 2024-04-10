@@ -46,7 +46,7 @@ function Page({ params }: PageProps) {
       setIsLoading(true); // Set loading to true when the fetch begins
       try {
         const response = await fetch(
-          `${API_URL.GET_SERVICE_DATA}/${params.svs_id}/${auth_provinceId}`,
+          `${API_URL.GET_SERVICE_DATA}/${params.sub_name}/${auth_provinceId}`,
           {
             method: 'GET',
             headers: {
