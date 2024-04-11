@@ -127,7 +127,7 @@ function SignupPage() {
                       setShowSuccessPopup(true); // Open the success popup
                       setTimeout(() => {
                         setShowSuccessPopup(false); // Hide success popup after 5 seconds
-                        navigate.push(`https://atlantic-canada-client.vercel.app/services/subservices`);
+                        navigate.push(`https://atlantic-canada-client.vercel.app/services`);
                       }, 2000); 
                       
 
