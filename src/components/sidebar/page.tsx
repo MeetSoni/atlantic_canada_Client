@@ -26,10 +26,10 @@ const Sidebar: React.FC<SidebarProps> = ({ closeMenu }) => {
         </button>
       </div>
       <div className="flex flex-col items-center p-4">
-        <a href="/" className="text-white my-2">
+        <a href="#" className="text-white my-2">
           Home
         </a>
-        <a href="/about" className="text-white my-2">
+        <a href="/About" className="text-white my-2">
           About
         </a>
         <a href="/services" className="text-white my-2">

@@ -22,10 +22,49 @@ function Page({ state }: ServiceCardProps) {
   const [provinces, setProvinces] = useState<any[]>([]);
   const { auth_provinceId, setprovinceId } = useAppContext();
   const [selectedProvinceId, setSelectedProvinceId] = useState('');
+  const [onload,setonload]=useState(false)
+  const [subServiceData, setSubServiceData] = useState<SubService[]>([]);
 
   useEffect(() => {
+    setSubServiceData(state)
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+
+  const { selectedItemId}=useAppContext();
+  
+    const getSubserviceData = async () => {
+     
+      try {
+       
+        const response = await fetch(`${API_URL.GET_SERVICE_DATA}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            serviceId: selectedItemId, // Use params.svs_id from props
+            provinceId: auth_provinceId // Update with the correct provinceId value
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data: SubService[] = await response.json();
+        setSubServiceData(data)
+        console.log(data);
+
+       state = data;
+
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        
+      }
+    };
+ 
 
   const fetchData = async () => {
     try {
@@ -50,11 +89,14 @@ function Page({ state }: ServiceCardProps) {
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedProvinceId = e.target.value;
     setprovinceId(selectedProvinceId);
+   
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    console.log("on submit  ")
+     setonload(true);
     e.preventDefault();
-    fetchData();
+    getSubserviceData();
   };
 
   return (
@@ -85,7 +127,7 @@ function Page({ state }: ServiceCardProps) {
       </div>
       {/* Display data based on selectedProvinceId */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ld-gap-6 md-gap-6 gap-6 mt-10 px-4 md:px-10 py-10">
-        {state.map((item, index) => (
+        {subServiceData.map((item, index) => (
           <div key={index} className="flex flex-col justify-between rounded-lg bg-white overflow-hidden shadow-xl transition-shadow duration-300 ease-in-out hover:shadow-2xl">
             <img src={item.subsvs_img} alt="Photo" className="w-full h-48 object-cover" />
             <div className="p-6 flex-1 flex flex-col">

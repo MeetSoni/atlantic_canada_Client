@@ -24,11 +24,9 @@ interface PageProps {
 
 function Page({ params }: PageProps) {
   const [subServices, setSubServices] = useState<SubService[]>([]);
-  const [isLoading, setIsLoading] = useState(true); // Added state to track loading status
-  const {authToken,setauthToken}=useAppContext();
-  const { auth_userName, setauthuserName } = useAppContext();
-  const { auth_provinceId,setprovinceId }=useAppContext();
-  const { selectedItemId,setSelectedItemId}=useAppContext();
+  const [isLoading, setIsLoading] = useState(true); // Added state to track loading status.
+  const { auth_provinceId }=useAppContext();
+  const { selectedItemId}=useAppContext();
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true); // Ensure loading state is true when starting to fetch data

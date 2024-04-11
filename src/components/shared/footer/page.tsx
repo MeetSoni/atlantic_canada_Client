@@ -10,20 +10,20 @@ function Footer() {
       <div className="w-full md:w-1/2 lg:w-1/4 mb-4 md:mb-0">
         <h2 className="text-lg font-semibold mb-4">Company</h2>
         <ul>
-          <a href="/"><li>Home</li></a>
-          <a href="/about"><li>About</li></a>
-          <a href="/Contact"> <li>Contact</li></a>
+          <li>About Us</li>
+          <li>Contact</li>
+          <li>Careers</li>
         </ul>
       </div>
 
       <div className="w-full md:w-1/2 lg:w-1/4 mb-4 md:mb-0">
         <h2 className="text-lg font-semibold mb-4">Services</h2>
         <ul>
-         <a href="/services"> <li>Banking</li></a>
-         <a href="/services"> <li>Housing</li></a>
-        <a href="/services"><li>Mobile Internet</li></a>
-          
-        <a href="/services"><li>Gas Station</li></a>
+          <li>Banking</li>
+          <li>Housing</li>
+          <li>Mobile Internet</li>
+          <li>Gas Station</li>
+
         </ul>
       </div>
 

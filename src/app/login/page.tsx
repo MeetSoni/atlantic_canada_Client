@@ -143,11 +143,13 @@ function SignupPage() {
 // returning the body 
   return (
     <>
+
+
    
       <div className=" p-10 min-h-screen flex items-center justify-center bg-gray-100  bg-white">
-        
-        <div className="bg-white p-8 rounded shadow-md w-full max-w-md bg-gradient-to-r from-grad_gray to-grad_white">
-        {authToken=='' &&  <div className="text-left  mt-4 ">
+    
+        <div className="bg-white p-8 rounded shadow-md w-full max-w-md bg-gradient-to-r from-grad_red to-grad_white">
+        {authToken=='' &&  <div className="text-left  mt-9">
     <h1 className="text-2xl font-bold text-center mb-4">Login is required</h1>
     <p className="text-center">Please login to continue to the service.</p>
   </div>}

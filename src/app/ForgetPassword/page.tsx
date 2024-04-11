@@ -114,8 +114,8 @@ function SignupPage() {
           </div>
         </div>
       )}
-      <div className=" p-10 min-h-screen flex items-center justify-center bg-white ">
-        <div className="bg-white p-8 rounded shadow-md w-full max-w-md bg-gradient-to-r from-grad_gray to-grad_white">
+      <div className=" p-10 min-h-screen flex items-center justify-center bg-gray-100 bg-gradient-to-r from-grad_red to-grad_white">
+        <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
           <h2 className="text-3xl font-bold mb-6">Forget Password</h2>
           {error && <p style={{ color: 'red' }}>{error}</p>}
 

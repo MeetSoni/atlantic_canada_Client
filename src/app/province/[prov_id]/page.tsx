@@ -43,7 +43,7 @@ function Page({ params }: PageProps): JSX.Element {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      console.log(`${API_URL.PROVINCE_BY_ID}/${params.prov_id}`);
+      
       try {
         const response = await fetch(` ${API_URL.PROVINCE_BY_ID}/${params.prov_id}`, {
           method: 'GET',

@@ -17,6 +17,7 @@ export default {
   GET_ALL_HOME_PROVINCES:`${API_URL}home_provinces`,
   ADD_PROFILE_PHOTO_URL:`${API_URL}addprofilepic`,
   UPDATE_PROFILE_DATA:`${API_URL}profileupdate`,
-  SEND_CONTACT_INFO:`${API_URL}user/sendcontactinfo`
+  SEND_CONTACT_INFO:`${API_URL}user/sendcontactinfo`,
+
 
 };
