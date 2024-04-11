@@ -125,7 +125,11 @@ function SignupPage() {
                       setprovinceId(data.data.province_id);
                       setProfilePic(data.data.profile_image);
                       setShowSuccessPopup(true); // Open the success popup
-                      navigate.push(`/profile/${data.data.email}`);
+                      setTimeout(() => {
+                        setShowSuccessPopup(false); // Hide success popup after 5 seconds
+                        navigate.push(`https://atlantic-canada-client.vercel.app/services/subservices`);
+                      }, 2000); 
+                      
 
                     }
                 }
@@ -148,7 +152,7 @@ function SignupPage() {
    
       <div className=" p-10 min-h-screen flex items-center justify-center bg-gray-100  bg-white">
     
-        <div className="bg-white p-8 rounded shadow-md w-full max-w-md bg-gradient-to-r from-grad_red to-grad_white">
+        <div className="bg-white p-8 rounded shadow-md w-full max-w-md bg-gradient-to-r from-grad_gray to-grad_white">
         {authToken=='' &&  <div className="text-left  mt-9">
     <h1 className="text-2xl font-bold text-center mb-4">Login is required</h1>
     <p className="text-center">Please login to continue to the service.</p>
@@ -183,8 +187,10 @@ function SignupPage() {
               Login
             </button>
           </form>
-          <a href="/signUp" className="text-blue-500 hover:text-blue-700">Don&apos;t have an account?</a>
-          <a href="/ForgetPassword" className="text-blue-500 hover:text-blue-700 mx-10"> Forget Password</a>
+          <div className='mt-4'>
+          <a href="/signUp" className="text-blue-500 hover:text-blue-700 mx-5">Don&apos;t have an account?</a>
+          <a href="/ForgetPassword" className="text-blue-500 hover:text-blue-700 "> Forget Password</a>
+          </div>
          
 
         </div>
@@ -192,7 +198,7 @@ function SignupPage() {
       </div>
       {showSuccessPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-8 rounded shadow-md">
+          <div className="bg-white p-8 rounded shadow-md" style={{ width: '400px' }}>
             <h2 className="text-3xl font-bold mb-4">Success</h2>
             <p>Login successful!</p>
             <button

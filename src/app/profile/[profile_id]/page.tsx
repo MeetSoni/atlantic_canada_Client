@@ -123,6 +123,9 @@ const ProfilePage = ({ params }: PageProps) => {
         navigate.push('/');
     };
 
+ 
+      
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       
         
@@ -151,7 +154,7 @@ const ProfilePage = ({ params }: PageProps) => {
         fileFormData.append('file', file as File);
       
         try {
-            const response = await fetch('http://localhost:5500/api/addprofilepic', {
+            const response = await fetch(`${API_URL.ADD_PROFILE_PHOTO_URL}`, {
                 method: 'POST',
                 body: fileFormData
             });
@@ -361,6 +364,8 @@ const ProfilePage = ({ params }: PageProps) => {
                             >
                                 Logout
                             </button>
+
+                           
                         </div>
                     </div>
                 </div>

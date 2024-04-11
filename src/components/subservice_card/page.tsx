@@ -103,26 +103,47 @@ function Page({ state }: ServiceCardProps) {
     <>
       <div>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="province_id" className="block text-sm font-medium text-gray-600">
-            Province
-          </label>
-          <select
-            id="province_id"
-            name="province_id"
-            value={auth_provinceId}
-            onChange={handleChange}
-            className="mt-1 p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
-          >
-            <option value="">Select a province</option>
-            {provinces.map((province) => (
-              <option key={province._id} value={province._id}>
-                {province.province}
-              </option>
-            ))}
-          </select>
-          <button type="submit" className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Submit
-          </button>
+        <div className="flex flex-col items-center">
+  <label htmlFor="province_id" className="block text-sm font-medium text-gray-600 mb-2">
+    Province you want to explore
+  </label>
+  <div className="relative">
+    <select
+      id="province_id"
+      name="province_id"
+      value={auth_provinceId}
+      onChange={handleChange}
+      className="appearance-none mt-1 p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+    >
+      <option value="">Select a province</option>
+      {provinces.map((province) => (
+        <option key={province._id} value={province._id}>
+          {province.province}
+        </option>
+      ))}
+    </select>
+    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-600">
+      <svg
+        className="w-5 h-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M19 9l-7 7-7-7"
+        />
+      </svg>
+    </div>
+  </div>
+  <button type="submit" className="mt-4 bg-customRed hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    Submit
+  </button>
+</div>
+
         </form>
       </div>
       {/* Display data based on selectedProvinceId */}

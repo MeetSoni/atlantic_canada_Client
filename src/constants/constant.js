@@ -18,6 +18,7 @@ export default {
   ADD_PROFILE_PHOTO_URL:`${API_URL}addprofilepic`,
   UPDATE_PROFILE_DATA:`${API_URL}profileupdate`,
   SEND_CONTACT_INFO:`${API_URL}user/sendcontactinfo`,
+  DELETE_ITEM:`${API_URL}delete`
 
 
 };
