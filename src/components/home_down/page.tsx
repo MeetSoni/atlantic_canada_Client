@@ -74,12 +74,12 @@ const Page: React.FC = () => {
         </div>
       </div>
 
-      <div className="bg-opacity-50 p-9 rounded-md shadow-lg text-white bg-white w-full flex flex-col md:flex-row">
+      <div className="bg-opacity-50 p-9 rounded-md shadow-lg text-black bg-white w-full flex flex-col md:flex-row">
         <div className="p-9 card flex-1 md:w-1/2">
           <Image src="/images/girl.jpeg" alt="Photo 1" className="card-img" width={600} height={400} />
         </div>
         <div className="p-9 card flex-1 p-3 md:w-1/2">
-          <h1 className="text-gray text-center font-extrabold text-xl md:text-2xl lg:text-3xl p-2">
+          <h1 className="text-black text-center font-extrabold text-xl md:text-2xl lg:text-3xl p-2">
             Reach out for Immigration help
           </h1>
           <p className="text-center md:text-left">
