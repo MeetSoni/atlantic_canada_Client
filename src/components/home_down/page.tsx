@@ -92,9 +92,11 @@ const Page: React.FC = () => {
             <li>👉 SIN number</li>
           </ul>
           <div className="mx-auto text-center mt-6 md:mt-10">
+            <a href="/Contact">
             <button className="text-white bg-customRed py-2 px-4 rounded hover:bg-white hover:text-customRed hover:border hover:border-solid hover:border-customRed transition duration-300">
               Consult now
             </button>
+            </a>
           </div>
         </div>
       </div>

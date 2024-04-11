@@ -123,10 +123,10 @@ const Contact: React.FC = () => {
         </div>
       </div>
       <div className="max-w-4xl mx-auto md:flex mt-12 md:space-x-4 md:max-w-6xl">
-        <InfoCard icon={faRunning} title="ABOUT CLUB" description="Running Guide Workouts" />
-        <InfoCard icon={faPhone} title="PHONE (LANDLINE)" description="+1-674-897-0340\n+1-674-897-0341" />
+       
+        <InfoCard icon={faPhone} title="PHONE (LANDLINE)" description="+1 647-535-8974" />
         <InfoCard icon={faMapMarkerAlt} title="OUR OFFICE LOCATION" description="The Atlantic Canada Consultation\nToronto Downtown, ON, CANADA" />
-        <InfoCard icon={faEnvelope} title="SEND US A MESSAGE" description="Feel free to write us a message!" />
+        <InfoCard icon={faEnvelope} title="SEND US A MESSAGE" description="atlanticconnectapp@gmail.com" />
       </div>
     </div>
   );

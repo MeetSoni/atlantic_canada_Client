@@ -209,8 +209,8 @@ const uploadphoto = async (e: React.FormEvent<HTMLFormElement>) => {
 
   return (
     <>
-      <div className="p-10 min-h-screen flex items-center justify-center bg-gray-100  bg-gradient-to-r from-grad_red to-grad_white">
-        <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
+      <div className="p-10 min-h-screen flex items-center justify-center  ">
+        <div className="bg-white p-8 rounded shadow-md w-full max-w-md bg-gradient-to-r from-grad_gray to-grad_white">
           <h2 className="text-3xl font-bold mb-6">Signup</h2>
           <form id="signup-form" className="space-y-4" onSubmit={handleSaveButtonClick}>
             {/* Form fields and error messages */}
@@ -233,14 +233,14 @@ const uploadphoto = async (e: React.FormEvent<HTMLFormElement>) => {
             </div>
             {passwordError && <p className="text-red-500">{passwordError}</p>}
             {/* User Type */}
-            <div>
+            {/* <div>
               <label htmlFor="user_type" className="block text-sm font-medium text-gray-600">User Type <span className="text-red-500">*</span></label>
               <input onChange={handleChange} type="text" id="user_type" name="user_type" className="mt-1 p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-blue-500" />
-            </div>
+            </div> */}
             {usertypeError && <p className="text-red-500">{usertypeError}</p>}
             {/* Province dropdown */}
             <div>
-              <label htmlFor="province_id" className="block text-sm font-medium text-gray-600">Province <span className="text-red-500">*</span></label>
+              <label htmlFor="province_id" className="block text-sm font-medium text-gray-600">Province you want to migrate <span className="text-red-500">*</span></label>
               <select
   id="province_id"
   name="province_id"
