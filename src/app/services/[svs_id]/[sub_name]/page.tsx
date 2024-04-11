@@ -5,6 +5,7 @@ import Specific_service from '@/components/spec_service/page';
 import { useParams } from 'next/navigation';
 import API_URL from '@/constants/constant';
 import Link from 'next/link';
+import { useAppContext } from "@/context";
 
 interface FAQ {
   que: string;
@@ -37,13 +38,15 @@ function Page({ params }: PageProps) {
   const [moreData, setMoreData] = useState<SubService[]>([]);
   const [state, setState] = useState<FAQ[]>([]);
   const [isLoading, setIsLoading] = useState(true); // Added loading state
+  const { auth_provinceId } = useAppContext();
+
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true); // Set loading to true when the fetch begins
       try {
         const response = await fetch(
-          `${API_URL.GET_SERVICE_DATA}/${params.svs_id}/${params.sub_name}`,
+          `${API_URL.GET_SERVICE_DATA}/${params.sub_name}/${auth_provinceId}`,
           {
             method: 'GET',
             headers: {
@@ -57,6 +60,7 @@ function Page({ params }: PageProps) {
         }
 
         const data: SubService[] = await response.json();
+        console.log(data)
         setName(data[0].subsvs_name);
         setState(data[0].faq_Que);
         setMoreData(data);
