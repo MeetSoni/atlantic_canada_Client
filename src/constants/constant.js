@@ -1,4 +1,4 @@
-export const API_URL = 'https://harlequin-newt-kit.cyclic.app/api/';
+export const API_URL = 'https://dull-teal-moose-belt.cyclic.app/api/';
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
